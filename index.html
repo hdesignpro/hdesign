@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Farah! 🎉</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-30px); }
+            60% { transform: translateY(-15px); }
+        }
+        
+        @keyframes sparkle {
+            0%, 100% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1); }
+        }
+        
+        @keyframes confetti {
+            0% { transform: translateY(-100vh) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+        }
+        
+        @keyframes sway {
+            0%, 100% { transform: rotate(-5deg) translateY(0px); }
+            50% { transform: rotate(5deg) translateY(-10px); }
+        }
+        
+        @keyframes bloom {
+            0%, 100% { transform: scale(1) rotate(0deg); }
+            50% { transform: scale(1.2) rotate(10deg); }
+        }
+        
+        @keyframes explode {
+            0% { 
+                transform: scale(0) rotate(0deg);
+                opacity: 1;
+                border-radius: 50%;
+            }
+            50% { 
+                transform: scale(20) rotate(180deg);
+                opacity: 0.8;
+                border-radius: 20%;
+            }
+            100% { 
+                transform: scale(50) rotate(360deg);
+                opacity: 0;
+                border-radius: 0%;
+            }
+        }
+        
+        @keyframes fadeInUp {
+            0% { 
+                opacity: 0; 
+                visibility: hidden;
+                transform: translateY(50px) scale(0.8); 
+            }
+            1% {
+                visibility: visible;
+            }
+            100% { 
+                opacity: 1; 
+                visibility: visible;
+                transform: translateY(0) scale(1); 
+            }
+        }
+        
+        @keyframes slideInLeft {
+            0% { 
+                opacity: 0; 
+                visibility: hidden;
+                transform: translateX(-100px); 
+            }
+            1% {
+                visibility: visible;
+            }
+            100% { 
+                opacity: 1; 
+                visibility: visible;
+                transform: translateX(0); 
+            }
+        }
+        
+        @keyframes slideInRight {
+            0% { 
+                opacity: 0; 
+                visibility: hidden;
+                transform: translateX(100px); 
+            }
+            1% {
+                visibility: visible;
+            }
+            100% { 
+                opacity: 1; 
+                visibility: visible;
+                transform: translateX(0); 
+            }
+        }
+        
+        .float { animation: float 3s ease-in-out infinite; }
+        .bounce { animation: bounce 2s infinite; }
+        .sparkle { animation: sparkle 1.5s ease-in-out infinite; }
+        .confetti { animation: confetti 3s linear infinite; }
+        .sway { animation: sway 4s ease-in-out infinite; }
+        .bloom { animation: bloom 3s ease-in-out infinite; }
+        
+        .explosion {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 100px;
+            height: 100px;
+            background: radial-gradient(circle, #ff6b6b, #4ecdc4, #ffe66d, #ff8e8e);
+            transform: translate(-50%, -50%);
+            animation: explode 2s ease-out forwards;
+            z-index: 1000;
+        }
+        
+        .hidden-content {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .animate-in-title {
+            animation: fadeInUp 1s ease-out 2.2s forwards;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .animate-in-name {
+            animation: fadeInUp 1s ease-out 2.8s forwards;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .animate-in-cake {
+            animation: fadeInUp 1.2s ease-out 3.4s forwards;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .animate-in-message1 {
+            animation: slideInLeft 1s ease-out 4.2s forwards;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .animate-in-message2 {
+            animation: slideInRight 1s ease-out 4.8s forwards;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .animate-in-message3 {
+            animation: fadeInUp 1s ease-out 5.4s forwards;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .animate-in-flowers {
+            animation: fadeInUp 0.8s ease-out 6s forwards;
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .balloon {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        }
+        
+        .balloon-2 {
+            background: linear-gradient(45deg, #4ecdc4, #6ee8df);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        }
+        
+        .balloon-3 {
+            background: linear-gradient(45deg, #ffe66d, #fff176);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+        }
+        
+        .cake-layer {
+            background: linear-gradient(45deg, #8b4513, #a0522d);
+            border-radius: 10px;
+        }
+        
+        .frosting {
+            background: linear-gradient(45deg, #ffb3ba, #ffc0cb);
+            border-radius: 15px 15px 5px 5px;
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-purple-400 via-pink-400 to-red-400 overflow-hidden relative">
+    <!-- Explosion Effect -->
+    <div id="explosion" class="explosion"></div>
+    
+    <!-- Confetti -->
+    <div id="confetti-container" class="fixed inset-0 pointer-events-none z-10"></div>
+    
+    <!-- Sparkles -->
+    <div class="fixed top-10 left-10 text-yellow-300 text-2xl sparkle hidden-content animate-in-flowers">✨</div>
+    <div class="fixed top-20 right-20 text-yellow-300 text-3xl sparkle hidden-content animate-in-flowers" style="animation-delay: 6.5s;">⭐</div>
+    <div class="fixed bottom-20 left-20 text-yellow-300 text-2xl sparkle hidden-content animate-in-flowers" style="animation-delay: 7s;">✨</div>
+    <div class="fixed bottom-10 right-10 text-yellow-300 text-3xl sparkle hidden-content animate-in-flowers" style="animation-delay: 7.5s;">⭐</div>
+    
+    <!-- Floating Flowers -->
+    <div class="fixed top-16 left-1/3 text-4xl sway hidden-content animate-in-flowers" style="animation-delay: 6.2s;">🌸</div>
+    <div class="fixed top-32 right-1/4 text-3xl bloom hidden-content animate-in-flowers" style="animation-delay: 6.8s;">🌺</div>
+    <div class="fixed top-48 left-1/6 text-3xl float hidden-content animate-in-flowers" style="animation-delay: 7.4s;">🌷</div>
+    <div class="fixed bottom-32 right-1/3 text-4xl sway hidden-content animate-in-flowers" style="animation-delay: 6.6s;">🌹</div>
+    <div class="fixed bottom-48 left-1/5 text-3xl bloom hidden-content animate-in-flowers" style="animation-delay: 7.2s;">🌻</div>
+    <div class="fixed top-1/3 right-12 text-3xl float hidden-content animate-in-flowers" style="animation-delay: 7.8s;">🌼</div>
+    <div class="fixed bottom-1/3 left-12 text-4xl sway hidden-content animate-in-flowers" style="animation-delay: 6.4s;">💐</div>
+    <div class="fixed top-2/3 right-1/6 text-3xl bloom hidden-content animate-in-flowers" style="animation-delay: 7.6s;">🏵️</div>
+    <div class="fixed top-1/4 left-20 text-3xl float hidden-content animate-in-flowers" style="animation-delay: 8.0s;">🌿</div>
+    <div class="fixed bottom-1/4 right-20 text-3xl sway hidden-content animate-in-flowers" style="animation-delay: 6.3s;">🌾</div>
+    
+    <!-- Main Content -->
+    <div class="flex flex-col items-center justify-center min-h-screen p-8 relative z-20">
+        <!-- Balloons -->
+        <div class="absolute top-10 left-1/4 flex space-x-4 hidden-content animate-in-flowers" style="animation-delay: 6s;">
+            <div class="balloon w-16 h-20 float" style="animation-delay: 0s;"></div>
+            <div class="balloon-2 w-16 h-20 float" style="animation-delay: 0.5s;"></div>
+            <div class="balloon-3 w-16 h-20 float" style="animation-delay: 1s;"></div>
+        </div>
+        
+        <!-- Title -->
+        <h1 class="text-6xl md:text-8xl font-bold text-white text-center mb-8 bounce hidden-content animate-in-title" style="text-shadow: 3px 3px 6px rgba(0,0,0,0.3); font-family: 'Comic Sans MS', cursive;">
+            HAPPY BIRTHDAY
+        </h1>
+        
+        <h2 class="text-4xl md:text-6xl font-bold text-yellow-300 text-center mb-12 bounce hidden-content animate-in-name" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.3); font-family: 'Comic Sans MS', cursive;">
+            FARAH! 🎂
+        </h2>
+        
+        <!-- Birthday Cake -->
+        <div class="relative mb-12 hidden-content animate-in-cake">
+            <!-- Cake Base -->
+            <div class="cake-layer w-48 h-16 mb-2"></div>
+            <div class="frosting w-52 h-8 -mt-6 mx-auto"></div>
+            
+            <!-- Cake Middle -->
+            <div class="cake-layer w-40 h-14 mx-auto mb-2"></div>
+            <div class="frosting w-44 h-8 -mt-6 mx-auto"></div>
+            
+            <!-- Cake Top -->
+            <div class="cake-layer w-32 h-12 mx-auto mb-2"></div>
+            <div class="frosting w-36 h-8 -mt-6 mx-auto"></div>
+            
+            <!-- Candles -->
+            <div class="absolute -top-8 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                <div class="w-1 h-6 bg-yellow-400"></div>
+                <div class="w-1 h-6 bg-yellow-400"></div>
+                <div class="w-1 h-6 bg-yellow-400"></div>
+                <div class="w-1 h-6 bg-yellow-400"></div>
+                <div class="w-1 h-6 bg-yellow-400"></div>
+            </div>
+            
+            <!-- Flames -->
+            <div class="absolute -top-10 left-1/2 transform -translate-x-1/2 flex space-x-2">
+                <div class="w-2 h-2 bg-orange-400 rounded-full sparkle"></div>
+                <div class="w-2 h-2 bg-orange-400 rounded-full sparkle" style="animation-delay: 0.3s;"></div>
+                <div class="w-2 h-2 bg-orange-400 rounded-full sparkle" style="animation-delay: 0.6s;"></div>
+                <div class="w-2 h-2 bg-orange-400 rounded-full sparkle" style="animation-delay: 0.9s;"></div>
+                <div class="w-2 h-2 bg-orange-400 rounded-full sparkle" style="animation-delay: 1.2s;"></div>
+            </div>
+            
+            <!-- Decorative flowers around cake -->
+            <div class="absolute -left-8 top-4 text-2xl bloom" style="animation-delay: 0.5s;">🌸</div>
+            <div class="absolute -right-8 top-4 text-2xl sway" style="animation-delay: 1.0s;">🌺</div>
+        </div>
+        
+        <!-- Birthday Message -->
+        <div class="text-center text-white text-xl md:text-2xl font-semibold max-w-4xl leading-relaxed mb-6 hidden-content animate-in-message1" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.4); font-family: 'Arial', sans-serif;">
+            إن شاء الله عامك الجديد يكون خير وبركة عليك، وتتحقّقلك كل الأماني اللي تتمنايها. 🌟
+        </div>
+        
+        <div class="text-center text-yellow-200 text-lg md:text-xl font-medium max-w-3xl leading-relaxed mb-6 hidden-content animate-in-message2" style="text-shadow: 1px 1px 2px rgba(0,0,0,0.3); font-family: 'Arial', sans-serif;">
+            ربي يعطيك الصحة وراحة البال، ويديم عليك السعادة وين ما تكوني. 💫
+        </div>
+        
+        <div class="text-center text-pink-200 text-2xl md:text-3xl font-bold hidden-content animate-in-message3" style="text-shadow: 2px 2px 4px rgba(0,0,0,0.4); font-family: 'Arial', sans-serif;">
+            كل عام وأنتِ بخير 🎈✨
+        </div>
+    </div>
+    
+    <script>
+        // Hide explosion after animation
+        setTimeout(() => {
+            document.getElementById('explosion').style.display = 'none';
+        }, 2000);
+        
+        // Create massive confetti explosion after main explosion
+        setTimeout(() => {
+            createMassiveConfetti();
+        }, 2000);
+        
+        // Create confetti automatically
+        function createConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#ff8e8e', '#6ee8df', '#fff176'];
+            
+            for (let i = 0; i < 30; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti absolute w-2 h-2 rounded';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.animationDelay = Math.random() * 3 + 's';
+                confetti.style.animationDuration = (Math.random() * 2 + 3) + 's';
+                container.appendChild(confetti);
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    if (confetti.parentNode) {
+                        confetti.parentNode.removeChild(confetti);
+                    }
+                }, 6000);
+            }
+        }
+        
+        // Create massive confetti explosion
+        function createMassiveConfetti() {
+            const container = document.getElementById('confetti-container');
+            const colors = ['#ff6b6b', '#4ecdc4', '#ffe66d', '#ff8e8e', '#6ee8df', '#fff176', '#ff69b4', '#98fb98'];
+            
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti absolute w-3 h-3 rounded';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.animationDelay = Math.random() * 1 + 's';
+                confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                container.appendChild(confetti);
+                
+                // Remove confetti after animation
+                setTimeout(() => {
+                    if (confetti.parentNode) {
+                        confetti.parentNode.removeChild(confetti);
+                    }
+                }, 5000);
+            }
+        }
+        
+        // Auto-create confetti periodically after initial explosion
+        setTimeout(() => {
+            setInterval(createConfetti, 12000);
+        }, 8000);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9777baf351da2820',t:'MTc1NjU5MzAwMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
