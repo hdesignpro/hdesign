@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hdesign - للتصميم والإبداع</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Cairo for Arabic, Inter for English -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Define fonts for each language */
+        html[lang="ar"] body {
+            font-family: 'Cairo', sans-serif;
+        }
+        html[lang="en"] body {
+            font-family: 'Inter', sans-serif;
+        }
+        .smooth-transition {
+            transition: all 0.3s ease-in-out;
+        }
+        /* Loading Spinner */
+        .loader {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #06b6d4;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Scroll-reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Testimonial slider */
+        .testimonial-slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+        .testimonial-item {
+            min-width: 100%;
+            box-sizing: border-box;
+        }
+        /* RTL/LTR icons for slider */
+        html[dir="ltr"] .rtl-icon { display: none; }
+        html[dir="ltr"] .ltr-icon { display: block; }
+        html[dir="rtl"] .ltr-icon { display: none; }
+        html[dir="rtl"] .rtl-icon { display: block; }
+        /* FAQ Accordion */
+        .faq-answer {
+            transition: max-height 0.3s ease-out;
+        }
+        /* Video Background Styling */
+        #hero-video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            transform: translateX(-50%) translateY(-50%);
+            background-size: cover;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+
+    <!-- Announcement Bar -->
+    <div id="announcement-bar" class="bg-cyan-500 text-white text-center p-2 text-sm relative">
+        <p data-key="announcement_text">
+            <span class="font-bold">عرض خاص!</span> خصم 20% على جميع خدمات تصميم المواقع هذا الشهر.
+        </p>
+        <button id="close-announcement" class="absolute top-1/2 right-4 -translate-y-1/2 text-2xl leading-none">&times;</button>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-gray-900/80 backdrop-blur-sm sticky top-0 z-50">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="h-12">
+                <img src="https://i.ibb.co/0y0QvLQQ/eign2.png" alt="EIGN Logo" class="h-full w-auto">
+            </a>
+            <div class="flex items-center">
+                <nav id="main-nav" class="hidden md:flex items-center space-x-6 rtl:space-x-reverse">
+                    <a href="#hero" class="hover:text-cyan-400 smooth-transition" data-key="nav_home">الرئيسية</a>
+                    <a href="#about" class="hover:text-cyan-400 smooth-transition" data-key="nav_about">من نحن</a>
+                    <a href="#services" class="hover:text-cyan-400 smooth-transition" data-key="nav_services">خدماتنا</a>
+                    <a href="#portfolio" class="hover:text-cyan-400 smooth-transition" data-key="nav_portfolio">أعمالنا</a>
+                    <a href="#testimonials" class="hover:text-cyan-400 smooth-transition" data-key="nav_testimonials">آراء العملاء</a>
+                    <a href="#faq" class="hover:text-cyan-400 smooth-transition" data-key="nav_faq">الأسئلة الشائعة</a>
+                    <a href="#blog" class="hover:text-cyan-400 smooth-transition" data-key="nav_blog">المدونة</a>
+                    <a href="#contact" class="hover:text-cyan-400 smooth-transition" data-key="nav_contact">اتصل بنا</a>
+                </nav>
+                <!-- Language Switcher -->
+                <div class="flex items-center mr-4 md:mr-0 md:ml-8">
+                    <button id="translate-btn" class="flex items-center gap-2 bg-cyan-600/50 hover:bg-cyan-600 text-white font-bold py-2 px-4 rounded-md text-sm smooth-transition">
+                        <span data-key="translate_button_text">Translate to English</span>
+                        <div id="translate-loader" class="hidden loader"></div>
+                    </button>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <a href="#hero" class="block py-2 px-6 text-sm hover:bg-gray-800" data-key="nav_home_mobile">الرئيسية</a>
+            <a href="#about" class="block py-2 px-6 text-sm hover:bg-gray-800" data-key="nav_about_mobile">من نحن</a>
+            <a href="#services" class="block py-2 px-6 text-sm hover:bg-gray-800" data-key="nav_services_mobile">خدماتنا</a>
+            <a href="#portfolio" class="block py-2 px-6 text-sm hover:bg-gray-800" data-key="nav_portfolio_mobile">أعمالنا</a>
+            <a href="#testimonials" class="block py-2 px-6 text-sm hover:bg-gray-800" data-key="nav_testimonials_mobile">آراء العملاء</a>
+            <a href="#faq" class="block py-2 px-6 text-sm hover:bg-gray-800" data-key="nav_faq_mobile">الأسئلة الشائعة</a>
+            <a href="#blog" class="block py-2 px-6 text-sm hover:bg-gray-800" data-key="nav_blog_mobile">المدونة</a>
+            <a href="#contact" class="block py-2 px-6 text-sm hover:bg-gray-800" data-key="nav_contact_mobile">اتصل بنا</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main id="hero" class="relative min-h-screen flex items-center justify-center text-center overflow-hidden">
+        <video autoplay loop muted playsinline id="hero-video">
+            <source src="https://videos.pexels.com/video-files/853875/853875-hd_1920_1080_30fps.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="absolute inset-0 bg-gray-900 opacity-60 z-10"></div>
+        
+        <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-cyan-500 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-blob z-10"></div>
+        <div class="absolute top-1/2 right-1/4 w-96 h-96 bg-purple-500 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-blob animation-delay-2000 z-10"></div>
+        <div class="absolute bottom-1/4 right-1/2 w-96 h-96 bg-pink-500 rounded-full mix-blend-screen filter blur-3xl opacity-20 animate-blob animation-delay-4000 z-10"></div>
+        
+        <div class="container mx-auto px-6 z-20 relative">
+            <h1 class="text-5xl md:text-7xl font-black mb-4 leading-tight reveal" data-key="hero_title">نصمم تجارب رقمية <span class="text-cyan-400">لا تُنسى</span></h1>
+            <p class="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8 reveal" style="transition-delay: 200ms;" data-key="hero_subtitle">من الفكرة إلى الواقع، نحول رؤيتك إلى تصميمات إبداعية تترك أثراً.</p>
+            <a href="#portfolio" class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-8 rounded-full text-lg smooth-transition shadow-lg shadow-cyan-500/20 reveal" style="transition-delay: 400ms;" data-key="hero_button">
+                شاهد أعمالنا
+            </a>
+        </div>
+    </main>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-4xl font-bold" data-key="about_title">من نحن؟</h2>
+                <p class="text-cyan-400 mt-2" data-key="about_subtitle">شركاؤك في النجاح الرقمي</p>
+            </div>
+            <div class="max-w-4xl mx-auto text-center text-gray-300 text-lg reveal">
+                <p data-key="about_text">نحن في hdesign فريق من المصممين والمطورين والمبدعين الشغوفين بتحويل الأفكار إلى واقع ملموس. نؤمن بقوة التصميم في حل المشكلات وبناء جسور التواصل بين العلامات التجارية وجمهورها. هدفنا هو تقديم حلول تصميم مبتكرة وفعالة تساهم في نمو أعمالك.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-4xl font-bold" data-key="services_title">خدماتنا</h2>
+                <p class="text-cyan-400 mt-2" data-key="services_subtitle">كيف يمكننا مساعدتك؟</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service Card 1 -->
+                <div class="bg-gray-800 p-8 rounded-lg shadow-lg text-center hover:scale-105 hover:bg-gray-700 smooth-transition reveal">
+                    <div class="mb-4 text-cyan-400"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"/></svg></div>
+                    <h3 class="text-2xl font-bold mb-2" data-key="service1_title">تصميم وتطوير المواقع</h3>
+                    <p class="text-gray-400" data-key="service1_desc">نصمم مواقع ويب حديثة، سريعة، ومتجاوبة تضمن أفضل تجربة للمستخدم.</p>
+                </div>
+                <!-- Service Card 2 -->
+                <div class="bg-gray-800 p-8 rounded-lg shadow-lg text-center hover:scale-105 hover:bg-gray-700 smooth-transition reveal" style="transition-delay: 200ms;">
+                    <div class="mb-4 text-cyan-400"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/></svg></div>
+                    <h3 class="text-2xl font-bold mb-2" data-key="service2_title">تصميم واجهات المستخدم (UI/UX)</h3>
+                    <p class="text-gray-400" data-key="service2_desc">نركز على إنشاء واجهات سهلة الاستخدام وجذابة بصرياً لتحقيق أهدافك.</p>
+                </div>
+                <!-- Service Card 3 -->
+                <div class="bg-gray-800 p-8 rounded-lg shadow-lg text-center hover:scale-105 hover:bg-gray-700 smooth-transition reveal" style="transition-delay: 400ms;">
+                    <div class="mb-4 text-cyan-400"><svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.364 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.196-1.538-1.118l1.518-4.674a1 1 0 00-.364-1.118L2.44 9.099c-.783-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg></div>
+                    <h3 class="text-2xl font-bold mb-2" data-key="service3_title">العلامات التجارية والهوية البصرية</h3>
+                    <p class="text-gray-400" data-key="service3_desc">نساعدك في بناء هوية بصرية قوية ومميزة تعكس قيم علامتك التجارية.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-4xl font-bold" data-key="portfolio_title">أعمالنا</h2>
+                <p class="text-cyan-400 mt-2" data-key="portfolio_subtitle">نترك بصمتنا الإبداعية</p>
+            </div>
+            <!-- Filter Buttons -->
+            <div id="portfolio-filters" class="flex justify-center gap-2 md:gap-4 mb-8 reveal">
+                <button class="filter-btn active" data-filter="all" data-key="filter_all">الكل</button>
+                <button class="filter-btn" data-filter="web" data-key="filter_web">تصميم مواقع</button>
+                <button class="filter-btn" data-filter="branding" data-key="filter_branding">هوية بصرية</button>
+                <button class="filter-btn" data-filter="uiux" data-key="filter_uiux">واجهات مستخدم</button>
+            </div>
+            <!-- Portfolio Grid -->
+            <div id="portfolio-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="portfolio-item group relative overflow-hidden rounded-lg shadow-lg reveal" data-category="web">
+                    <img src="https://placehold.co/600x400/111827/06b6d4?text=موقع+تجاري" alt="Project 1" class="w-full h-full object-cover smooth-transition group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black bg-opacity-60 flex items-end p-4 opacity-0 group-hover:opacity-100 smooth-transition">
+                        <div>
+                            <p class="text-sm text-cyan-400" data-key="p1_category">تصميم مواقع</p>
+                            <h3 class="text-white text-xl font-bold" data-key="p1_name">موقع شركة تقنية</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item group relative overflow-hidden rounded-lg shadow-lg reveal" data-category="branding">
+                    <img src="https://placehold.co/600x400/111827/8b5cf6?text=هوية+بصرية" alt="Project 2" class="w-full h-full object-cover smooth-transition group-hover:scale-110">
+                     <div class="absolute inset-0 bg-black bg-opacity-60 flex items-end p-4 opacity-0 group-hover:opacity-100 smooth-transition">
+                        <div>
+                            <p class="text-sm text-cyan-400" data-key="p2_category">هوية بصرية</p>
+                            <h3 class="text-white text-xl font-bold" data-key="p2_name">هوية مقهى</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item group relative overflow-hidden rounded-lg shadow-lg reveal" data-category="uiux">
+                    <img src="https://placehold.co/600x400/111827/ec4899?text=تطبيق+جوال" alt="Project 3" class="w-full h-full object-cover smooth-transition group-hover:scale-110">
+                     <div class="absolute inset-0 bg-black bg-opacity-60 flex items-end p-4 opacity-0 group-hover:opacity-100 smooth-transition">
+                        <div>
+                            <p class="text-sm text-cyan-400" data-key="p3_category">واجهات مستخدم</p>
+                            <h3 class="text-white text-xl font-bold" data-key="p3_name">تطبيق توصيل</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item group relative overflow-hidden rounded-lg shadow-lg reveal" data-category="web">
+                    <img src="https://placehold.co/600x400/111827/f59e0b?text=مدونة+شخصية" alt="Project 4" class="w-full h-full object-cover smooth-transition group-hover:scale-110">
+                     <div class="absolute inset-0 bg-black bg-opacity-60 flex items-end p-4 opacity-0 group-hover:opacity-100 smooth-transition">
+                        <div>
+                            <p class="text-sm text-cyan-400" data-key="p4_category">تصميم مواقع</p>
+                            <h3 class="text-white text-xl font-bold" data-key="p4_name">مدونة سفر</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item group relative overflow-hidden rounded-lg shadow-lg reveal" data-category="branding">
+                    <img src="https://placehold.co/600x400/111827/10b981?text=علامة+تجارية" alt="Project 5" class="w-full h-full object-cover smooth-transition group-hover:scale-110">
+                     <div class="absolute inset-0 bg-black bg-opacity-60 flex items-end p-4 opacity-0 group-hover:opacity-100 smooth-transition">
+                        <div>
+                            <p class="text-sm text-cyan-400" data-key="p5_category">هوية بصرية</p>
+                            <h3 class="text-white text-xl font-bold" data-key="p5_name">علامة لمنتج عضوي</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="portfolio-item group relative overflow-hidden rounded-lg shadow-lg reveal" data-category="web">
+                    <img src="https://placehold.co/600x400/111827/ef4444?text=متجر+الكتروني" alt="Project 6" class="w-full h-full object-cover smooth-transition group-hover:scale-110">
+                     <div class="absolute inset-0 bg-black bg-opacity-60 flex items-end p-4 opacity-0 group-hover:opacity-100 smooth-transition">
+                        <div>
+                            <p class="text-sm text-cyan-400" data-key="p6_category">تصميم مواقع</p>
+                            <h3 class="text-white text-xl font-bold" data-key="p6_name">متجر إلكتروني للأزياء</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-4xl font-bold" data-key="testimonials_title">ماذا يقول عملاؤنا؟</h2>
+                <p class="text-cyan-400 mt-2" data-key="testimonials_subtitle">شهادات نفخر بها</p>
+            </div>
+            <div class="max-w-3xl mx-auto relative reveal">
+                <div class="overflow-hidden">
+                    <div id="testimonial-slider" class="testimonial-slider">
+                        <!-- Testimonial 1 -->
+                        <div class="testimonial-item px-4">
+                            <div class="bg-gray-800 p-8 rounded-lg text-center">
+                                <p class="text-lg italic text-gray-300 mb-4" data-key="t1_quote">"كان العمل مع فريق hdesign تجربة رائعة. لقد فهموا رؤيتنا تمامًا وقدموا تصميمًا يفوق التوقعات. الاحترافية والجودة عالية جدًا."</p>
+                                <p class="font-bold text-cyan-400" data-key="t1_name">أحمد خالد</p>
+                                <p class="text-sm text-gray-500" data-key="t1_company">المدير التنفيذي، شركة ABC</p>
+                            </div>
+                        </div>
+                        <!-- Testimonial 2 -->
+                        <div class="testimonial-item px-4">
+                            <div class="bg-gray-800 p-8 rounded-lg text-center">
+                                <p class="text-lg italic text-gray-300 mb-4" data-key="t2_quote">"سرعة في الإنجاز وإبداع لا مثيل له. الموقع الجديد ساهم في زيادة مبيعاتنا بنسبة 40%. شكرًا hdesign!"</p>
+                                <p class="font-bold text-cyan-400" data-key="t2_name">فاطمة علي</p>
+                                <p class="text-sm text-gray-500" data-key="t2_company">مؤسسة، متجر XYZ</p>
+                            </div>
+                        </div>
+                        <!-- Testimonial 3 -->
+                        <div class="testimonial-item px-4">
+                           <div class="bg-gray-800 p-8 rounded-lg text-center">
+                                <p class="text-lg italic text-gray-300 mb-4" data-key="t3_quote">"التواصل كان سهلاً والفريق متجاوب جدًا. لقد حولوا أفكارنا المعقدة إلى واجهة مستخدم بسيطة وأنيقة."</p>
+                                <p class="font-bold text-cyan-400" data-key="t3_name">يوسف محمود</p>
+                                <p class="text-sm text-gray-500" data-key="t3_company">مدير منتج، تطبيق TechApp</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Slider Controls -->
+                <button id="prev-testimonial" class="absolute top-1/2 -translate-y-1/2 left-0 md:-left-12 bg-gray-700/50 hover:bg-gray-700 p-2 rounded-full smooth-transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ltr-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 rtl-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                </button>
+                <button id="next-testimonial" class="absolute top-1/2 -translate-y-1/2 right-0 md:-right-12 bg-gray-700/50 hover:bg-gray-700 p-2 rounded-full smooth-transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 ltr-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" /></svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 rtl-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" /></svg>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-4xl font-bold" data-key="faq_title">الأسئلة الشائعة</h2>
+                <p class="text-cyan-400 mt-2" data-key="faq_subtitle">نجيب على استفساراتكم</p>
+            </div>
+            <div class="max-w-3xl mx-auto space-y-4 reveal">
+                <!-- FAQ Item 1 -->
+                <div class="bg-gray-700 rounded-lg">
+                    <button class="faq-question w-full flex justify-between items-center text-left p-6">
+                        <span class="font-bold text-lg" data-key="q1_question">كم يستغرق تصميم وتطوير موقع إلكتروني؟</span>
+                        <svg class="w-6 h-6 smooth-transition" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-answer overflow-hidden max-h-0">
+                        <p class="p-6 pt-0 text-gray-300" data-key="q1_answer">تعتمد المدة على حجم وتعقيد المشروع. بشكل عام، يستغرق الموقع البسيط من أسبوعين إلى 4 أسابيع، بينما قد تحتاج المشاريع الأكبر إلى وقت أطول. نحن نلتزم بتقديم جدول زمني واضح في بداية كل مشروع.</p>
+                    </div>
+                </div>
+                <!-- FAQ Item 2 -->
+                <div class="bg-gray-700 rounded-lg">
+                    <button class="faq-question w-full flex justify-between items-center text-left p-6">
+                        <span class="font-bold text-lg" data-key="q2_question">ما هي تكلفة خدماتكم؟</span>
+                        <svg class="w-6 h-6 smooth-transition" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-answer overflow-hidden max-h-0">
+                        <p class="p-6 pt-0 text-gray-300" data-key="q2_answer">نحن نؤمن بتقديم حلول مخصصة لكل عميل، لذلك لا نستخدم باقات أسعار ثابتة. يتم تحديد التكلفة بناءً على متطلبات مشروعك الفريدة. تواصل معنا للحصول على عرض سعر مجاني ومفصل.</p>
+                    </div>
+                </div>
+                <!-- FAQ Item 3 -->
+                <div class="bg-gray-700 rounded-lg">
+                    <button class="faq-question w-full flex justify-between items-center text-left p-6">
+                        <span class="font-bold text-lg" data-key="q3_question">هل تقدمون خدمة الصيانة والدعم بعد إطلاق الموقع؟</span>
+                        <svg class="w-6 h-6 smooth-transition" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                    </button>
+                    <div class="faq-answer overflow-hidden max-h-0">
+                        <p class="p-6 pt-0 text-gray-300" data-key="q3_answer">نعم بالطبع. نقدم باقات صيانة ودعم فني اختيارية لضمان بقاء موقعك محدثاً وآمناً ويعمل بأفضل أداء. يمكننا مناقشة هذه الخيارات معك لتحديد ما يناسب احتياجاتك.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-4xl font-bold" data-key="blog_title">أحدث المقالات</h2>
+                <p class="text-cyan-400 mt-2" data-key="blog_subtitle">أفكار ورؤى في عالم التصميم</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Blog Post 1 -->
+                <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-cyan-500/20 smooth-transition reveal group">
+                    <a href="article1.html" class="block overflow-hidden"><img src="https://placehold.co/600x400/0891b2/ffffff?text=UX+Design" alt="UX Design" class="w-full h-48 object-cover group-hover:scale-110 smooth-transition"></a>
+                    <div class="p-6">
+                        <p class="text-sm text-cyan-400" data-key="post1_category">تصميم المواقع</p>
+                        <h3 class="text-xl font-bold my-2 hover:text-cyan-300 smooth-transition"><a href="article1.html" data-key="post1_title">5 أسباب لأهمية تصميم تجربة المستخدم (UX)</a></h3>
+                        <p class="text-gray-400 mb-4 text-sm" data-key="post1_excerpt">تجربة المستخدم لم تعد رفاهية، بل هي حجر الأساس لنجاح أي منتج رقمي في جذب العملاء والاحتفاظ بهم.</p>
+                        <a href="article1.html" class="font-bold text-cyan-500 hover:text-cyan-300 smooth-transition" data-key="post_readmore">اقرأ المزيد &rarr;</a>
+                    </div>
+                </div>
+                <!-- Blog Post 2 -->
+                <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-purple-500/20 smooth-transition reveal group" style="transition-delay: 200ms;">
+                    <a href="#" class="blog-link block overflow-hidden"><img src="https://placehold.co/600x400/6d28d9/ffffff?text=Branding" alt="Branding" class="w-full h-48 object-cover group-hover:scale-110 smooth-transition"></a>
+                    <div class="p-6">
+                        <p class="text-sm text-purple-400" data-key="post2_category">هوية بصرية</p>
+                        <h3 class="text-xl font-bold my-2 hover:text-purple-300 smooth-transition"><a href="#" class="blog-link" data-key="post2_title">كيف تختار لوحة الألوان المثالية لعلامتك التجارية؟</a></h3>
+                        <p class="text-gray-400 mb-4 text-sm" data-key="post2_excerpt">الألوان تتحدث لغة لا تحتاج إلى كلمات. اكتشف معنا سيكولوجية الألوان وكيفية استخدامها لبناء هوية لا تُنسى.</p>
+                        <a href="#" class="blog-link font-bold text-purple-500 hover:text-purple-300 smooth-transition" data-key="post_readmore2">اقرأ المزيد &rarr;</a>
+                    </div>
+                </div>
+                <!-- Blog Post 3 -->
+                <div class="bg-gray-800 rounded-lg overflow-hidden shadow-lg hover:shadow-pink-500/20 smooth-transition reveal group" style="transition-delay: 400ms;">
+                    <a href="#" class="blog-link block overflow-hidden"><img src="https://placehold.co/600x400/be185d/ffffff?text=SEO" alt="SEO" class="w-full h-48 object-cover group-hover:scale-110 smooth-transition"></a>
+                    <div class="p-6">
+                        <p class="text-sm text-pink-400" data-key="post3_category">التسويق الرقمي</p>
+                        <h3 class="text-xl font-bold my-2 hover:text-pink-300 smooth-transition"><a href="#" class="blog-link" data-key="post3_title">التصميم وتأثيره على محركات البحث (SEO)</a></h3>
+                        <p class="text-gray-400 mb-4 text-sm" data-key="post3_excerpt">هل تعلم أن تصميم موقعك يؤثر بشكل مباشر على ترتيبه في جوجل؟ تعرف على أفضل الممارسات لدمج التصميم مع SEO.</p>
+                        <a href="#" class="blog-link font-bold text-pink-500 hover:text-pink-300 smooth-transition" data-key="post_readmore3">اقرأ المزيد &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12 reveal">
+                <h2 class="text-4xl font-bold" data-key="contact_title">هل لديك فكرة مشروع؟</h2>
+                <p class="text-cyan-400 mt-2" data-key="contact_subtitle">لنتحدث!</p>
+            </div>
+            <div class="max-w-2xl mx-auto reveal">
+                <form action="#" method="POST" class="space-y-6">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-300 mb-1" data-key="form_name">الاسم</label>
+                        <input type="text" id="name" name="name" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-4 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500" required>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-300 mb-1" data-key="form_email">البريد الإلكتروني</label>
+                        <input type="email" id="email" name="email" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-4 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500" required>
+                    </div>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-300 mb-1" data-key="form_message">رسالتك</label>
+                        <textarea id="message" name="message" rows="4" class="w-full bg-gray-700 border border-gray-600 rounded-md py-2 px-4 text-white focus:outline-none focus:ring-2 focus:ring-cyan-500" required></textarea>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-3 px-8 rounded-full text-lg smooth-transition shadow-lg shadow-cyan-500/20" data-key="form_submit">
+                            إرسال الرسالة
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 border-t border-gray-700 py-8">
+        <div class="container mx-auto px-6 text-center text-gray-400">
+            <p data-key="footer_copyright">&copy; 2024 hdesign. جميع الحقوق محفوظة.</p>
+            <p class="mt-2" data-key="footer_love">تصميم وتطوير بحب ❤️</p>
+        </div>
+    </footer>
+    
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-5 right-5 bg-cyan-500/70 hover:bg-cyan-500 text-white p-3 rounded-full shadow-lg smooth-transition opacity-0 pointer-events-none">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7" /></svg>
+    </button>
+    
+    <!-- Modal for other blog links -->
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center p-4 z-50 hidden">
+        <div class="bg-gray-800 rounded-lg shadow-2xl p-8 max-w-sm w-full text-center">
+            <h3 class="text-2xl font-bold text-cyan-400 mb-4" data-key="modal_title">قريباً!</h3>
+            <p class="text-gray-300 mb-6" data-key="modal_text">نحن نعمل بجد على إعداد هذه المقالة. ستكون متاحة قريباً!</p>
+            <button id="modal-close-btn" class="bg-cyan-500 hover:bg-cyan-600 text-white font-bold py-2 px-6 rounded-full smooth-transition" data-key="modal_close_btn">أغلق</button>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Announcement Bar Logic ---
+            const announcementBar = document.getElementById('announcement-bar');
+            const closeAnnouncementBtn = document.getElementById('close-announcement');
+
+            if (sessionStorage.getItem('announcementClosed') === 'true') {
+                announcementBar.style.display = 'none';
+            }
+
+            if (closeAnnouncementBtn) {
+                closeAnnouncementBtn.addEventListener('click', () => {
+                    announcementBar.style.display = 'none';
+                    sessionStorage.setItem('announcementClosed', 'true');
+                });
+            }
+
+            // --- Gemini Translation Logic ---
+            const translatableElements = document.querySelectorAll('[data-key]');
+            const translateBtn = document.getElementById('translate-btn');
+            const translateBtnText = translateBtn.querySelector('span');
+            const translateLoader = document.getElementById('translate-loader');
+            const htmlEl = document.documentElement;
+
+            const originalTexts = {};
+            const translatedTexts = {};
+            let currentLang = 'ar';
+            let isTranslated = false;
+
+            translatableElements.forEach(el => {
+                originalTexts[el.dataset.key] = el.innerHTML;
+            });
+            originalTexts['translate_button_text'] = 'Translate to English';
+
+            const applyTranslation = (lang) => {
+                const targetTexts = lang === 'ar' ? originalTexts : translatedTexts;
+                translatableElements.forEach(el => {
+                    if (targetTexts[el.dataset.key]) {
+                        el.innerHTML = targetTexts[el.dataset.key];
+                    }
+                });
+                htmlEl.lang = lang;
+                htmlEl.dir = lang === 'ar' ? 'rtl' : 'ltr';
+                currentLang = lang;
+                localStorage.setItem('hdesign_lang', lang); // Save language choice
+                translateBtnText.textContent = lang === 'ar' ? originalTexts['translate_button_text'] : translatedTexts['translate_button_text'];
+                
+                const activeFilter = document.querySelector('#portfolio-filters .filter-btn.active');
+                if (activeFilter) {
+                    document.querySelectorAll('#portfolio-filters .filter-btn').forEach(btn => btn.classList.remove('active'));
+                    const key = activeFilter.dataset.key;
+                    document.querySelector(`.filter-btn[data-key="${key}"]`).classList.add('active');
+                }
+            };
+
+            const fetchAndTranslate = async () => {
+                translateLoader.classList.remove('hidden');
+                translateBtn.disabled = true;
+
+                const textsToTranslate = {};
+                translatableElements.forEach(el => {
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = originalTexts[el.dataset.key];
+                    textsToTranslate[el.dataset.key] = tempDiv.textContent || tempDiv.innerText;
+                });
+                textsToTranslate['translate_button_text'] = 'Back to Arabic';
+                textsToTranslate['modal_title'] = 'Coming Soon!';
+                textsToTranslate['modal_text'] = 'We are working hard on this article. It will be available soon!';
+                textsToTranslate['modal_close_btn'] = 'Close';
+
+
+                const prompt = `Translate the following JSON object's string values from Arabic to English. Maintain the exact same JSON structure and keys in your response. For keys ending in '_name', '_title', or '_subtitle', provide a natural, marketing-friendly translation. For keys ending in '_quote', '_desc', or '_answer', translate the paragraph accurately. For filter keys, provide a concise translation. For keys ending in '_question', translate the question accurately. For keys like 'post_readmore', translate it as 'Read More →'. \n\n ${JSON.stringify(textsToTranslate)}`;
+                
+                try {
+                    const apiKey = ""; // Leave empty
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
+                    const payload = {
+                        contents: [{ parts: [{ text: prompt }] }],
+                        generationConfig: { responseMimeType: "application/json" }
+                    };
+                    const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+                    const result = await response.json();
+                    const translatedJson = JSON.parse(result.candidates[0].content.parts[0].text);
+                    
+                    if (translatedJson.hero_title) {
+                        const originalHeroTitle = originalTexts.hero_title;
+                        const spanContent = originalHeroTitle.substring(originalHeroTitle.indexOf('<span>') + 6, originalHeroTitle.indexOf('</span>'));
+                        const translatedSpanContent = translatedJson.hero_title.substring(translatedJson.hero_title.lastIndexOf(' ') + 1);
+                        translatedJson.hero_title = translatedJson.hero_title.replace(translatedSpanContent, `<span class="text-cyan-400">${translatedSpanContent}</span>`);
+                    }
+                    
+                    Object.assign(translatedTexts, translatedJson);
+                    isTranslated = true;
+                    applyTranslation('en');
+
+                } catch (error) {
+                    console.error("Translation Error:", error);
+                    alert('An error occurred during translation. Please try again.');
+                } finally {
+                    translateLoader.classList.add('hidden');
+                    translateBtn.disabled = false;
+                }
+            };
+
+            translateBtn.addEventListener('click', () => {
+                if (currentLang === 'ar') {
+                    if (isTranslated) {
+                        applyTranslation('en');
+                    } else {
+                        fetchAndTranslate();
+                    }
+                } else {
+                    applyTranslation('ar');
+                }
+            });
+
+            // --- Scroll Reveal Animation ---
+            const revealElements = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, { threshold: 0.1 });
+            revealElements.forEach(el => observer.observe(el));
+
+            // --- Portfolio Filter Logic ---
+            const filterButtons = document.querySelectorAll('#portfolio-filters .filter-btn');
+            const portfolioItems = document.querySelectorAll('#portfolio-grid .portfolio-item');
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    button.classList.add('active');
+                    const filter = button.dataset.filter;
+                    portfolioItems.forEach(item => {
+                        if (filter === 'all' || item.dataset.category === filter) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            // Add custom styles for filter buttons
+            const style = document.createElement('style');
+            style.innerHTML = `
+                .filter-btn {
+                    padding: 8px 16px;
+                    border: 1px solid #0891b2; /* cyan-600 */
+                    border-radius: 9999px;
+                    color: #a5f3fc; /* cyan-200 */
+                    background-color: transparent;
+                    transition: all 0.2s;
+                }
+                .filter-btn:hover {
+                    background-color: #155e75; /* cyan-900 */
+                }
+                .filter-btn.active {
+                    background-color: #06b6d4; /* cyan-500 */
+                    color: white;
+                    font-weight: bold;
+                }
+            `;
+            document.head.appendChild(style);
+
+
+            // --- Testimonial Slider Logic ---
+            const slider = document.getElementById('testimonial-slider');
+            const prevBtn = document.getElementById('prev-testimonial');
+            const nextBtn = document.getElementById('next-testimonial');
+            const items = document.querySelectorAll('.testimonial-item');
+            let currentIndex = 0;
+
+            function updateSlider() {
+                const isRtl = document.documentElement.dir === 'rtl';
+                const sign = isRtl ? 1 : -1;
+                slider.style.transform = `translateX(${sign * currentIndex * 100}%)`;
+            }
+
+            prevBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex > 0) ? currentIndex - 1 : items.length - 1;
+                updateSlider();
+            });
+
+            nextBtn.addEventListener('click', () => {
+                currentIndex = (currentIndex < items.length - 1) ? currentIndex + 1 : 0;
+                updateSlider();
+            });
+            
+            // --- FAQ Accordion Logic ---
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const answer = question.nextElementSibling;
+                    const icon = question.querySelector('svg');
+
+                    if (answer.style.maxHeight) {
+                        answer.style.maxHeight = null;
+                        icon.classList.remove('rotate-180');
+                    } else {
+                        answer.style.maxHeight = answer.scrollHeight + "px";
+                        icon.classList.add('rotate-180');
+                    }
+                });
+            });
+
+            // --- Back to Top Button ---
+            const backToTopButton = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) {
+                    backToTopButton.classList.add('opacity-100', 'pointer-events-auto');
+                    backToTopButton.classList.remove('opacity-0', 'pointer-events-none');
+                } else {
+                    backToTopButton.classList.add('opacity-0', 'pointer-events-none');
+                    backToTopButton.classList.remove('opacity-100', 'pointer-events-auto');
+                }
+            });
+            backToTopButton.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+
+            // --- Mobile Menu Logic ---
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+            const mobileMenuLinks = mobileMenu.getElementsByTagName('a');
+            for (let link of mobileMenuLinks) {
+                link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+            }
+
+            // --- Blog Post Modal Logic (for non-linked posts) ---
+            const blogLinks = document.querySelectorAll('.blog-link');
+            const modal = document.getElementById('modal');
+            const modalCloseBtn = document.getElementById('modal-close-btn');
+
+            blogLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    // Only show modal if the link is a placeholder
+                    if (link.getAttribute('href') === '#') {
+                        e.preventDefault();
+                        modal.classList.remove('hidden');
+                    }
+                });
+            });
+
+            modalCloseBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
